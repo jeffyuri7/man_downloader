@@ -23,11 +23,17 @@ while True:
         ui.header()
         options = ["Listar Manuais disponíveis", "Baixar Manual", "Sair"]
         option = ui.menu(options)
-        if option == 1:
+        if 0 < option < 3:
+            main_principal(option)
             continue
-        else:
+        elif option == 3:
+            ui.exitTo()
             break
+        else:
+            print("ERRO! Opção inválida! Digite um número de opção válido.")
+            sleep(2)
+            continue
     except:
-        print("Erro, opção inválida! Tente novamente.")
+        print("Erro, opção inválida! Digite apenas o número da opção.")
         sleep(2)
         continue
