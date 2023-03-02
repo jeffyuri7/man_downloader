@@ -21,8 +21,9 @@ while True:
         clear()
         ui = UI("MANUAL DOWNLOADER")
         ui.header()
-        opc = int(input("Digite a opção:  "))
-        if opc == 1:
+        options = ["Listar Manuais disponíveis", "Baixar Manual", "Sair"]
+        option = ui.menu(options)
+        if option == 1:
             continue
         else:
             break
