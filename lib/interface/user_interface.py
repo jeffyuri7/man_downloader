@@ -38,11 +38,9 @@ class UI:
             try:
                 num = int(input(choice))
             except (ValueError, TypeError):
-                self.header("Erro: por favor, digite uma opção válida.")
-                continue
+                return None
             except (KeyboardInterrupt):
-                self.header("Usuário preferiu não digitar.")
-                return 0
+                return None
             else:
                 return num
 
