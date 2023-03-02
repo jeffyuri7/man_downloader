@@ -2,6 +2,8 @@
 """Main module - It instancies objects to make the interface and logic."""
 
 import os
+import list_manual
+import download_manual
 from time import sleep
 from lib.interface.user_interface import UI
 
@@ -15,7 +17,9 @@ def main_principal(opc):
     """Create the logic of main menu."""
     clear()
     if opc == 1:
-        pass
+        list_manual.main()
+    if opc == 2:
+        download_manual.main()
 
 
 while True:
@@ -31,11 +35,13 @@ while True:
         elif option == 3:
             ui.exitTo()
             break
+        elif option is None:
+            raise TypeError
         else:
             print("ERRO! Opção inválida! Digite um número de opção válido.")
             sleep(2)
             continue
-    except:
+    except TypeError:
         print("Erro, opção inválida! Digite apenas o número da opção.")
         sleep(2)
         continue
