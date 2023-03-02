@@ -27,5 +27,19 @@ class UI:
             print(f'[ {num} ] - {item}')
             num += 1
         print(self.line())
-        option = input('Sua opção:  ')
+        option = self.inputInt('Sua opção:  ')
         return option
+
+    def inputInt(self, choice):
+        """Read and converte user's choice to int."""
+        while True:
+            try:
+                num = int(input(choice))
+            except (ValueError, TypeError):
+                self.header("Erro: por favor, digite uma opção válida.")
+                continue
+            except (KeyboardInterrupt):
+                self.header("Usuário preferiu não digitar.")
+                return 0
+            else:
+                return num
