@@ -1,16 +1,11 @@
 #!/usr/bin/env python3
 """Main module - It instancies objects to make the interface and logic."""
 
-import os
 import list_manual
 import download_manual
 from time import sleep
 from lib.interface.user_interface import UI
-
-
-def clear():
-    """Clear the terminal."""
-    os.system('clear')
+from utils.helper import clear
 
 
 def main_principal(opc):
