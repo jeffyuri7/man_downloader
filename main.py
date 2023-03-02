@@ -6,7 +6,9 @@ from time import sleep
 from lib.interface.user_interface import UI
 
 
-clear = lambda: os.system('clear')
+def clear():
+    """Clear the terminal."""
+    os.system('clear')
 
 
 def main_principal(opc):
