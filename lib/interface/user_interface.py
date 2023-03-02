@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Module to create user interface."""
 
+from time import sleep
+
 
 class UI:
     """Create user interface in terminal, without GUI."""
@@ -43,3 +45,11 @@ class UI:
                 return 0
             else:
                 return num
+
+    def exitTo(self):
+        """Exit of program."""
+        print("\nSaindo do programa...\n")
+        sleep(1)
+        print('VOLTE SEMPRE QUE PRECISAR!\n')
+        sleep(3)
+        return None
