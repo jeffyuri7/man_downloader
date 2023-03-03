@@ -2,6 +2,7 @@
 """Module to create user interface."""
 
 from time import sleep
+from utils.helper import clear
 
 
 class UI:
@@ -51,3 +52,15 @@ class UI:
         print('VOLTE SEMPRE QUE PRECISAR!\n')
         sleep(3)
         return None
+
+    def menu_manuals(self, options):
+        """Create a menu with the manuals."""
+        lista = []
+        num = 1
+        for key, value in options.items():
+            print(f'[ {str.center(str(num), 4)} ] - {key} ')
+            num += 1
+            lista.append(key)
+        print(self.line())
+        option = self.inputInt('Sua opção:  ')
+        return lista[option-1]
