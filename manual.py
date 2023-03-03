@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Class for manual object."""
 
+import requests
+import bs4
+from time import sleep
 
 class Manual:
     """Create a manual object."""
