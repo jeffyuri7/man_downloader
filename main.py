@@ -28,9 +28,16 @@ def main_principal(opc):
                     manual.download_manual()
                     break
                 manual.download_chapter(choice3)
-            elif choice2 == 3:
-                manual.download_manual()
-                break
+            if choice2 == 2:
+                print("Atenção")
+                print("Essa opção pode demorar um tempo considerável.")
+                choice4 = input("\nDeseja baixar o manual completo? [ S/N ]")
+                if choice4 in 'Ss':
+                    manual.download_manual()
+                    break
+                else:
+                    print("Ok, voltando para o menu anterior...")
+                    break
             else:
                 print("Opção inválida! Tente novamente.")
                 continue
