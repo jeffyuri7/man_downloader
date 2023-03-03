@@ -73,7 +73,6 @@ def main():
             # TODO implements the download of manual.
             confirm = input(f'\nDeseja baixar o {option}? [ S/N ]')
             if confirm in 'Ss':
-                print("Baixando manual...")
                 return [option, list_man[option]]
                 sleep(5)
             elif confirm in 'Nn':
