@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Main module - It instancies objects to make the interface and logic."""
 
+from manual import Manual
 import list_manual
 import download_manual
 from time import sleep
@@ -12,8 +13,9 @@ def main_principal(opc):
     """Create the logic of main menu."""
     clear()
     if opc == 1:
-        manual = list_manual.main()
-        print(manual)
+        choice = list_manual.main()
+        manual = Manual(choice)
+        print(manual.list_chapters())
         sleep(3)
 
 
