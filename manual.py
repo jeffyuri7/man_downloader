@@ -15,7 +15,20 @@ class Manual:
 
     def list_chapters(self):
         """List a index with chapters."""
-        pass
+        print("Obtendo a lista de capítulos...")
+        index = {}
+        try:
+            res = requests.get(self.link)
+            res.raise_for_status()
+            manual = bs4.BeautifulSoup(res.text)
+            chapters = manual.select('a.internal-link')
+            for item in chapters:
+                index[item.getText()] = item.get('href')
+            return index
+        except Exception as exc:
+            print(exc)
+            sleep(3)
+            print("Erro ao carregar a lista de capítulos.")
 
     def download_manual(self):
         """Download the entire manual."""
