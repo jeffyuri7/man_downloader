@@ -74,7 +74,7 @@ def main():
             confirm = input(f'\nDeseja baixar o {option}? [ S/N ]')
             if confirm in 'Ss':
                 print("Baixando manual...")
-                return list_man[option]
+                return [option, list_man[option]]
                 sleep(5)
             elif confirm in 'Nn':
                 clear()
