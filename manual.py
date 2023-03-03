@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Class for manual object."""
-
+import os
 import requests
 import bs4
 from time import sleep
@@ -12,15 +12,17 @@ class Manual:
         """Create a object with chapters and attachments."""
         self.titulo = manual[0]
         self.link = manual[1]
+        self.index = []
+        self.dictionary = {}
 
     def list_chapters(self):
         """List a index with chapters."""
-        print("Obtendo a lista de capítulos...")
+        print("Obtendo a lista de capítulos e anexos...")
         index = {}
         try:
             res = requests.get(self.link)
             res.raise_for_status()
-            manual = bs4.BeautifulSoup(res.text)
+            manual = bs4.BeautifulSoup(res.text, features="lxml")
             chapters = manual.select('a.internal-link')
             for item in chapters:
                 index[item.getText()] = item.get('href')
