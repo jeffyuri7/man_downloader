@@ -30,10 +30,47 @@ class Manual:
             sleep(3)
             print("Erro ao carregar a lista de capítulos.")
 
+    def create_index(self):
+        """Create a index of manual."""
+        ind = self.list_chapters()
+        self.dictionary = ind
+        print("\nLista de Capítulos Atualizada.")
+        lista = []
+        num = 1
+        for key, value in ind.items():
+            print(f'[ {str.center(str(num), 4)} ] - {key} ')
+            num += 1
+            lista.append(key)
+        self.index = lista
+
+
     def download_manual(self):
         """Download the entire manual."""
         pass
 
     def download_chapter(self, chapter):
-        """Download the specific chapter."""
-        pass
+        """Download DOC from URL to local directory.
+
+        :param url: The url of the DOC file to be downloaded
+        :return: True if DOC file was successfully downloaded, otherwise False.
+        """
+        # Request URL and get response object
+        link = self.index[chapter-1]
+        url = self.dictionary[link]
+        print(url)
+        sleep(4)
+        response = requests.get(url, stream=True)
+
+        # isolate DOC filename from URL
+        doc_file_name = os.path.basename(url)
+        if response.status_code == 200:
+            # Save in current working directory
+            filepath = os.path.join(os.getcwd(), doc_file_name)
+            with open(filepath, 'wb') as doc_object:
+                doc_object.write(response.content)
+                print(f'{doc_file_name} foi baixado com sucesso!')
+                return True
+        else:
+            print(f'Uh oh! Não conseguimos baixar {doc_file_name}')
+            print(f"Resposta do servidor: {response.status_code}")
+            return False
