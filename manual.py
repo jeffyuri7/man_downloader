@@ -5,9 +5,10 @@
 class Manual:
     """Create a manual object."""
 
-    def __init__(self, indice):
+    def __init__(self, manual):
         """Create a object with chapters and attachments."""
-        self.indice = indice
+        self.titulo = manual[0]
+        self.link = manual[1]
 
     def list_chapters(self):
         """List a index with chapters."""
