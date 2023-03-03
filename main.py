@@ -12,9 +12,9 @@ def main_principal(opc):
     """Create the logic of main menu."""
     clear()
     if opc == 1:
-        list_manual.main()
-    if opc == 2:
-        download_manual.main()
+        manual = list_manual.main()
+        print(manual)
+        sleep(3)
 
 
 while True:
@@ -22,12 +22,12 @@ while True:
         clear()
         ui = UI("MANUAL DOWNLOADER")
         ui.header()
-        options = ["Listar Manuais disponíveis", "Baixar Manual", "Sair"]
+        options = ["Listar Manuais disponíveis","Sair"]
         option = ui.menu(options)
-        if 0 < option < 3:
+        if 0 < option < 2:
             main_principal(option)
             continue
-        elif option == 3:
+        elif option == 2:
             ui.exitTo()
             break
         elif option is None:
@@ -40,3 +40,5 @@ while True:
         print("Erro, opção inválida! Digite apenas o número da opção.")
         sleep(2)
         continue
+    except KeyboardInterrupt:
+        ui.exitTo()
