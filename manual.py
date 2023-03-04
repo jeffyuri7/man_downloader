@@ -76,3 +76,10 @@ class Manual:
             print(f'Uh oh! Não conseguimos baixar {doc_file_name}')
             print(f"Resposta do servidor: {response.status_code}")
             return False
+    def create_folder(self):
+        """Create a folder to save the manual."""
+        title = first_word(self.titulo)  # Create a folder with first word
+        path = os.path.join(os.getcwd(), title)
+        if not os.path.isdir(path):
+            os.mkdir(title)
+        return path
