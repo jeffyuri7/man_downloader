@@ -23,6 +23,6 @@ def first_word(string):
 
     if inicio is not None and fim is not None:
         primeira_palavra = string[inicio:fim]
-        print(primeira_palavra)
     else:
         print('A frase não contém nenhuma palavra')
+    return primeira_palavra
