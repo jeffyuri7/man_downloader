@@ -4,6 +4,8 @@ import os
 import requests
 import bs4
 from time import sleep
+from utils.helper import first_word
+
 
 class Manual:
     """Create a manual object."""
