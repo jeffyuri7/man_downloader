@@ -57,6 +57,23 @@ class DB:
             self.conn.commit()
         return library
 
+    def list_manual(self, data_id):
+        """List all chapters and attachments of a manual."""
+        try:
+            data = (data_id,)
+            library = []
+            self.cur = self.conn.cursor()
+            cursor = self.cur.execute("SELECT * FROM documentos WHERE manual_id = ? ORDER BY ordem", data)
+            for row in cursor:
+                library.append(row)
+        except Exception as exc:
+            print("Houve um erro ao recuperar informações do bando de dados.")
+            print("Código do erro", exc)
+        finally:
+            self.cur.close()
+            self.conn.commit()
+        return library
+
     def update_link(self, link):
         """Update the link if it change."""
         pass
