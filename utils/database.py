@@ -41,9 +41,21 @@ class DB:
             self.cur.close()
             self.conn.commit()
 
-    def select(self):
-        """Select data in database."""
-        pass
+    def list_library(self):
+        """List all manuals of library."""
+        try:
+            library = []
+            self.cur = self.conn.cursor()
+            cursor = self.cur.execute("SELECT * FROM manuals")
+            for row in cursor:
+                library.append(row)
+        except Exception as exc:
+            print("Houve um erro ao recuperar informações do bando de dados.")
+            print("Código do erro", exc)
+        finally:
+            self.cur.close()
+            self.conn.commit()
+        return library
 
     def update_link(self, link):
         """Update the link if it change."""
