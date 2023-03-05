@@ -27,9 +27,19 @@ class DB:
             self.cur.close()
             self.conn.commit()
 
-    def update(self):
-        """Update the database."""
-        pass
+    def update_manual(self, data):
+        """Update the chapters and attachments of a manual."""
+        try:
+            self.cur = self.conn.cursor()
+            self.cur.execute("INSERT INTO documentos (cap_anexo, link, manual_id) VALUES (?, ?, ?)", data)
+            print("Banco de dados atualizado com sucesso.")
+        except Exception as exc:
+            print("Houve um erro ao atualizar o bando de dados.")
+            print("Código do erro", exc)
+            print("O banco de dados não foi atualizado.")
+        finally:
+            self.cur.close()
+            self.conn.commit()
 
     def select(self):
         """Select data in database."""
