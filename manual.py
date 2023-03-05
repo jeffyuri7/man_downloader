@@ -12,8 +12,9 @@ class Manual:
 
     def __init__(self, manual):
         """Create a object with chapters and attachments."""
-        self.titulo = manual[0]
-        self.link = manual[1]
+        self.id = 0  # ID of database
+        self.titulo = manual[0]  # Title of manual in database
+        self.link = manual[1]  # Link of manual in database
         self.index = []
         self.dictionary = {}
 
