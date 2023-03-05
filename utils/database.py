@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """This module include the logical about database."""
 
+import sqlite3
 
-class BD:
+
+class DB:
     """Create a database object."""
 
-    def __init__(self, banco):
+    def __init__(self):
         """Create a database object."""
         self.banco = banco
 
