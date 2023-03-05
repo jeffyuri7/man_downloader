@@ -9,7 +9,7 @@ class DB:
 
     def __init__(self):
         """Create a database object."""
-        self.banco = banco
+        self.conn = sqlite3.connect('database.sqlite3')
 
     def insert(self):
         """Insert data to the database."""
