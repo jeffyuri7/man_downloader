@@ -75,5 +75,18 @@ class DB:
         return library
 
     def update_link(self, link):
-        """Update the link if it change."""
-        pass
+        """Update the link of the library, if it change."""
+        try:
+            desc = "link-normas"
+            data = (link, desc)
+            self.cur = self.conn.cursor()
+            self.cur.execute("UPDATE information SET informacao = ? WHERE descricao = ?", data)
+        except Exception as exc:
+            print("Houve um erro ao atualizar o bando de dados.")
+            print("Código do erro", exc)
+            print("O banco de dados não foi atualizado.")
+            return False
+        finally:
+            self.cur.close()
+            self.conn.commit()
+        return "Banco de dados atualizado com sucesso"
