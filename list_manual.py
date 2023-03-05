@@ -8,11 +8,10 @@ from lib.interface.user_interface import UI
 from utils.helper import clear
 
 
-def list_manuals():
+def list_manuals(db):
     """List all available manuals."""
-    print("Obtendo a lista de manuais...")
-    library = update_manuals()
-    return library
+    print("Consultando o banco de dados local...")
+    sleep(1)
 
 
 def update_manuals(link='https://intranet.correios.com.br/ect-normas'):
@@ -126,4 +125,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    update_manuals_from_file()
