@@ -56,6 +56,44 @@ def update_manuals(link='https://intranet.correios.com.br/ect-normas'):
                 break
 
 
+def update_manuals_from_file():
+    """Update the DB of manuals."""
+    library = {}
+    while True:
+        try:
+            file = open('manuais.mhtml')
+            # TODO fuction to update link. If a new link inserted,
+            # the link will be updated in database
+            # bd.update_link(link)
+            correios_normas = bs4.BeautifulSoup(file, features="lxml")
+            links = correios_normas.select('.titulo-marcadores-1 > a[href]')
+            print(links)
+            for item in links:
+                library[item.getText()] = item.get('href')
+            print(library)
+            return library
+        except Exception as exc:
+            print(exc)
+            sleep(10)
+            response = input("Houve um problema com o servidor ao tentar atualizar a lista de Manuais.\n\nDeseja tentar novamente? [ S/N ]")
+            if response in 'Ss':
+                print("Deseja passar um novo link para atualizar a base de dados?")
+                print("Utilize essa opção apenas se o link acima for alterado.")
+                while True:
+                    option = input("Sua resposta: [ S/N ]")
+                    if option in 'Ss':
+                        print("Atualizando link e base de dados...")
+                        sleep(2)
+                        break
+                    elif option in 'Nn':
+                        print('Ok, vamos tentar novamente com o link padrão.')
+                        sleep(2)
+                        break
+                    else:
+                        print("Opção inválida! Tente novamente.")
+            elif response in 'Nn':
+                print("Ok, cancelando operação.")
+                break
 def main():
     """Execute the main function."""
     while True:
