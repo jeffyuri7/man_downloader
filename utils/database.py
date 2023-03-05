@@ -90,3 +90,22 @@ class DB:
             self.cur.close()
             self.conn.commit()
         return "Banco de dados atualizado com sucesso"
+
+    def consult_link(self):
+        """Return the link of library."""
+        try:
+            self.cur = self.conn.cursor()
+            cursor = self.cur.execute("SELECT informacao FROM information WHERE descricao='link-normas'")
+            link = cursor.fetchone()
+        except Exception as exc:
+            print("Houve um erro ao consultar o bando de dados.")
+            print("Código do erro", exc)
+            return False
+        finally:
+            self.cur.close()
+        return link[0]
+
+    def close_db(self):
+        """Close a connection with DB."""
+        self.conn.close()
+        return "Conexão Fechada com sucesso."
