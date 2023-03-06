@@ -10,11 +10,11 @@ from utils.helper import first_word
 class Manual:
     """Create a manual object."""
 
-    def __init__(self, manual):
+    def __init__(self, id_manual, titulo, link):
         """Create a object with chapters and attachments."""
-        self.id = 0  # ID of database
-        self.titulo = manual[0]  # Title of manual in database
-        self.link = manual[1]  # Link of manual in database
+        self.id_manual = id_manual  # ID of manual in database
+        self.titulo = titulo  # Title of manual in database
+        self.link = link  # Link of manual in database
         self.index = []
         self.dictionary = {}
 
