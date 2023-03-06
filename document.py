@@ -8,12 +8,12 @@ import os
 class Document:
     """Specify a document of a manual."""
 
-    def __init__(self, id, title, link, manual_id):
+    def __init__(self, id_document, title, link, manual_id):
         """Build a document object."""
-        self.id = id
-        self.title = title
-        self.link = link
-        self.manual_id = manual_id
+        self.id = id_document  # ID of document in database
+        self.title = title  # Title of document
+        self.link = link  # Link to download the document
+        self.manual_id = manual_id  # Foreign key of manual.
 
     def show_document(self):
         """Show information about a document."""
