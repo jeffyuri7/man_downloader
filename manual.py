@@ -85,7 +85,6 @@ class Manual:
             filepath = os.path.join(folder, doc_file_name)
             with open(filepath, 'wb') as doc_object:
                 doc_object.write(response.content)
-                print(f'{doc_file_name} foi baixado com sucesso!')
                 return True
         else:
             print(f'Ops! Não conseguimos baixar {doc_file_name}')
@@ -103,4 +102,5 @@ class Manual:
 if __name__ == '__main__':
     db = DB()
     man = Manual(2, "MANCOD - Manual de Conduta Disciplinar", "https://intranet.correios.com.br/ect-normas/mancod")
-    man.list_chapters(db)
+    # man.list_chapters(db)
+    man.download_manual(db)
