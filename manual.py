@@ -65,32 +65,6 @@ class Manual:
         print("\nDownload concluído.")
         print(f'O {self.titulo} foi baixado com sucesso!')
 
-
-
-    def download_chapter(self, chapter):
-        """Download DOC from URL to local directory.
-
-        :param url: The url of the DOC file to be downloaded
-        :return: True if DOC file was successfully downloaded, otherwise False.
-        """
-        # Request URL and get response object
-        link = self.index[chapter-1]
-        url = self.dictionary[link]
-        response = requests.get(url, stream=True)
-        folder = self.create_folder()
-        # isolate DOC filename from URL
-        doc_file_name = os.path.basename(url)
-        if response.status_code == 200:
-            # Save in new directory created by create_folder function
-            filepath = os.path.join(folder, doc_file_name)
-            with open(filepath, 'wb') as doc_object:
-                doc_object.write(response.content)
-                return True
-        else:
-            print(f'Ops! Não conseguimos baixar {doc_file_name}')
-            print(f"Resposta do servidor: {response.status_code}")
-            return False
-
     def create_folder(self):
         """Create a folder to save the manual."""
         title = first_word(self.titulo)  # Create a folder with first word
@@ -102,5 +76,8 @@ class Manual:
 if __name__ == '__main__':
     db = DB()
     man = Manual(2, "MANCOD - Manual de Conduta Disciplinar", "https://intranet.correios.com.br/ect-normas/mancod")
-    # man.list_chapters(db)
-    man.download_manual(db)
+    # man.show_content_manual(db)
+    # man.download_manual(db)
+
+    lista = db.list_library()
+    print(lista)
