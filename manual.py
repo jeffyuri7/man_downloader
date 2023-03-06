@@ -46,6 +46,7 @@ class Manual:
     def show_content_manual(self, db):
         """Show the content of index manual."""
         print("Recuperando a lista de capítulos e anexos...")
+        sleep(1)
         self.list_chapters(db)
         print(*((f'[ {str.rjust(str(item[4]), 2)} ] - {item[1]}') for item in self.index), sep='\n')
 
