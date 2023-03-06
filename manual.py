@@ -17,20 +17,17 @@ class Manual:
         self.titulo = titulo  # Title of manual in database
         self.link = link  # Link of manual in database
         self.index = []
-        self.dictionary = {}
 
     def update_manual_chapters(self, db):
         """List a index with chapters."""
-        print("Obtendo a lista de capítulos e anexos...")
+        print("Baixando a lista de capítulos e anexos...")
         try:
             res = requests.get(self.link)
             res.raise_for_status()
             manual = bs4.BeautifulSoup(res.text, features="lxml")
             chapters = manual.select('a.internal-link')
             index = [(self.id_manual, (item.getText()).strip(), (item.get('href')).strip(), order) for order, item in enumerate(chapters, 1)]
-            self.index = index
-            print(self.index)
-            db.update_manual(self.index)
+            db.update_manual(index)
         except Exception as exc:
             print(exc)
             sleep(3)
@@ -46,19 +43,6 @@ class Manual:
             print(exc)
             sleep(3)
             print("Erro ao carregar a lista de capítulos.")
-
-    def create_index(self):
-        """Create a index of manual."""
-        ind = self.list_chapters()
-        self.dictionary = ind
-        print("\nLista de Capítulos Atualizada.")
-        lista = []
-        num = 1
-        for key, value in ind.items():
-            print(f'[ {str.center(str(num), 4)} ] - {key} ')
-            num += 1
-            lista.append(key)
-        self.index = lista
 
     def download_manual(self):
         """Download the entire manual."""
@@ -98,9 +82,6 @@ class Manual:
         return path
 
 if __name__ == '__main__':
+    db = DB()
     man = Manual(2, "MANCOD - Manual de Conduta Disciplinar", "https://intranet.correios.com.br/ect-normas/mancod")
-    indice = man.update_manual()
-    print(type(indice))
-    print(indice)
-    for item in indice:
-        print(f'[ {item[3]} ] - {item[1]}  | {item[2]}')
+    man.list_chapters(db)
