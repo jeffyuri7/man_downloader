@@ -31,7 +31,7 @@ class DB:
         """Update the chapters and attachments of a manual."""
         try:
             self.cur = self.conn.cursor()
-            self.cur.execute("INSERT INTO documentos (cap_anexo, link, manual_id) VALUES (?, ?, ?)", data)
+            self.cur.executemany("INSERT INTO documentos (manual_id, cap_anexo, link, ordem) VALUES (?, ?, ?, ?)", data)
             print("Banco de dados atualizado com sucesso.")
         except Exception as exc:
             print("Houve um erro ao atualizar o bando de dados.")
