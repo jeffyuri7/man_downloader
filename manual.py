@@ -35,19 +35,12 @@ class Manual:
             sleep(3)
             print("Erro ao carregar a lista de capítulos.")
 
-
-    def list_chapters(self):
+    def list_chapters(self, db):
         """List a index with chapters."""
-        print("Obtendo a lista de capítulos e anexos...")
-        index = {}
+        print("Recuperando a lista de capítulos e anexos...")
         try:
-            res = requests.get(self.link)
-            res.raise_for_status()
-            manual = bs4.BeautifulSoup(res.text, features="lxml")
-            chapters = manual.select('a.internal-link')
-            for item in chapters:
-                index[item.getText()] = item.get('href')
-            return index
+            self.index = db.list_manual(self.id_manual)
+            print(*((f'[ {str.rjust(str(item[4]), 2)} ] - {item[1]}') for item in self.index), sep='\n')
         except Exception as exc:
             print(exc)
             sleep(3)
