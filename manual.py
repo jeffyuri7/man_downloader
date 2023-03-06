@@ -104,3 +104,11 @@ class Manual:
         if not os.path.isdir(path):
             os.mkdir(title)
         return path
+
+if __name__ == '__main__':
+    man = Manual(2, "MANCOD - Manual de Conduta Disciplinar", "https://intranet.correios.com.br/ect-normas/mancod")
+    indice = man.update_manual()
+    print(type(indice))
+    print(indice)
+    for item in indice:
+        print(f'[ {item[3]} ] - {item[1]}  | {item[2]}')
