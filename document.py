@@ -28,10 +28,9 @@ class Document:
         doc_file_name = os.path.basename(self.link)
         if response.status_code == 200:
             # Save in current working directory
-            filepath = os.path.join(os.getcwd(), doc_file_name)
+            filepath = os.path.join(folder, doc_file_name)
             with open(filepath, 'wb') as doc_object:
                 doc_object.write(response.content)
-                print(f'{doc_file_name} foi baixado com sucesso!')
                 return True
         else:
             print(f'Uh oh! Não conseguimos baixar {doc_file_name}')
