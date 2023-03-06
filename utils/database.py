@@ -44,11 +44,9 @@ class DB:
     def list_library(self):
         """List all manuals of library."""
         try:
-            library = []
             self.cur = self.conn.cursor()
             cursor = self.cur.execute("SELECT * FROM manuals")
-            for row in cursor:
-                library.append(row)
+            library = [row for row in cursor]
         except Exception as exc:
             print("Houve um erro ao recuperar informações do bando de dados.")
             print("Código do erro", exc)
