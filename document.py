@@ -15,11 +15,7 @@ class Document:
         self.link = link  # Link to download the document
         self.manual_id = manual_id  # Foreign key of manual.
 
-    def show_document(self):
-        """Show information about a document."""
-        pass
-
-    def download_document(self):
+    def download_document(self, folder):
         """Download DOC from URL to local directory.
 
         :param url: The url of the DOC file to be downloaded
