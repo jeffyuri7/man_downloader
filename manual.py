@@ -5,6 +5,7 @@ import requests
 import bs4
 from time import sleep
 from utils.helper import first_word
+from utils.database import DB
 
 
 class Manual:
