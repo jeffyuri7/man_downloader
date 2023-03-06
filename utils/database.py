@@ -61,11 +61,9 @@ class DB:
         """List all chapters and attachments of a manual."""
         try:
             data = (data_id,)
-            library = []
             self.cur = self.conn.cursor()
             cursor = self.cur.execute("SELECT * FROM documentos WHERE manual_id = ? ORDER BY ordem", data)
-            for row in cursor:
-                library.append(row)
+            library = [row for row in cursor]
         except Exception as exc:
             print("Houve um erro ao recuperar informações do bando de dados.")
             print("Código do erro", exc)
