@@ -6,6 +6,7 @@ import bs4
 from time import sleep
 from utils.helper import first_word
 from utils.database import DB
+from document import Document
 
 
 class Manual:
@@ -34,19 +35,37 @@ class Manual:
             print("Erro ao carregar a lista de capítulos.")
 
     def list_chapters(self, db):
-        """List a index with chapters."""
-        print("Recuperando a lista de capítulos e anexos...")
+        """Consult DB and generate a index of manual."""
         try:
             self.index = db.list_manual(self.id_manual)
-            print(*((f'[ {str.rjust(str(item[4]), 2)} ] - {item[1]}') for item in self.index), sep='\n')
         except Exception as exc:
             print(exc)
             sleep(3)
             print("Erro ao carregar a lista de capítulos.")
 
-    def download_manual(self):
+    def show_content_manual(self, db):
+        """Show the content of index manual."""
+        print("Recuperando a lista de capítulos e anexos...")
+        self.list_chapters(db)
+        print(*((f'[ {str.rjust(str(item[4]), 2)} ] - {item[1]}') for item in self.index), sep='\n')
+
+    def download_manual(self, db):
         """Download the entire manual."""
-        pass
+        print(f"ATENÇÃO: Agora será realizado o download do {self.titulo} completo.")
+        print("\nEssa operação pode demorar muito tempo, dependendo do tamanho da quantidade de arquivos e da velocidade da sua conexão.")
+        folder = self.create_folder()
+        print(f"Os arquivos serão salvos na seguinte pasta: {folder}")
+        if not self.index:
+            self.list_chapters(db)
+        for item in self.index:
+            print(f"\n - Baixando {item[1]}")
+            chapter = Document(item[0], item[1], item[2], item[3])
+            chapter.download_document(folder)
+            print(f" - {item[1]} baixado com sucesso!\n")
+        print("\nDownload concluído.")
+        print(f'O {self.titulo} foi baixado com sucesso!')
+
+
 
     def download_chapter(self, chapter):
         """Download DOC from URL to local directory.
