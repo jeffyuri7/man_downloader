@@ -18,6 +18,26 @@ class Manual:
         self.index = []
         self.dictionary = {}
 
+    def update_manual(self):
+        """List a index with chapters."""
+        print("Obtendo a lista de capítulos e anexos...")
+        index = []
+        try:
+            res = requests.get(self.link)
+            res.raise_for_status()
+            manual = bs4.BeautifulSoup(res.text, features="lxml")
+            chapters = manual.select('a.internal-link')
+            order = 1
+            for item in chapters:
+                index.append((self.id_manual, (item.getText()).strip(), (item.get('href')).strip(), order))
+                order += 1
+            return index
+        except Exception as exc:
+            print(exc)
+            sleep(3)
+            print("Erro ao carregar a lista de capítulos.")
+
+
     def list_chapters(self):
         """List a index with chapters."""
         print("Obtendo a lista de capítulos e anexos...")
