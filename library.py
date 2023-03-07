@@ -18,26 +18,33 @@ class Library:
 
     def list_manuals(self, db):
         """List all manuals of library."""
-        print("Recuperando a lista de manuais...")
+        print("=" * 70)
+        print(str.center("Recuperando a lista de manuais...", 70))
+        print("=" * 70)
+        print()
         self.all_manuals = db.list_library()
-        sleep(1)
+
+    def show_list_manuals(self, db):
+        """Show a list of manuals retrieved of local database."""
+        if not self.all_manuals:
+            self.list_manuals(db)
         print(*((f'[ {str.rjust(str(ordem), 2)} ] - {item[1]}') for ordem, item in enumerate(self.all_manuals, 1)), sep='\n')
 
     def download_all_manuals(self):
         """Download all manuals of library."""
         pass
 
-    def update_manuals(self, db):
-        """Add one manual to library."""
-        print("Sincronizando a lista de manuais com o servidor...")
+    def sync_library(self, db):
+        """Sync data with server before update the local database."""
+        print("=" * 70)
+        print(str.center("Sincronizando a lista de manuais com o servidor...", 70))
+        print("=" * 70)
+        print()
         try:
             # First, check if self.all_manuals alredy exists. If it doesn't
             # exist we call list_manuals function that set this var.
             if not self.all_manuals:
                 self.list_manuals(db)
-
-            # Create a iter with data to compare with download data.
-            list_currently = [(item[1], item[2]) for item in self.all_manuals]
 
             # Retrieve link of local database.
             self.link = db.consult_link()
