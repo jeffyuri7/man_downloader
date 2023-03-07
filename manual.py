@@ -12,16 +12,16 @@ from document import Document
 class Manual:
     """Create a manual object."""
 
-    def __init__(self, id_manual, titulo, link):
+    def __init__(self, item):
         """Create a object with chapters and attachments."""
-        self.id_manual = id_manual  # ID of manual in database
-        self.titulo = titulo  # Title of manual in database
-        self.link = link  # Link of manual in database
+        self.id_manual = item[0]  # ID of manual in database
+        self.titulo = item[1]  # Title of manual in database
+        self.link = item[2]  # Link of manual in database
         self.index = []
 
     def update_manual_chapters(self, db):
         """List a index with chapters."""
-        print("Baixando a lista de capítulos e anexos...")
+        print(f"Baixando a lista de capítulos e anexos do {self.titulo}")
         try:
             res = requests.get(self.link)
             res.raise_for_status()
