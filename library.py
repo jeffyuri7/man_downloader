@@ -57,7 +57,25 @@ class Library:
 
             # Create a iter with download data.
             index_library = [((item.getText()).strip(), (item.get('href')).strip()) for item in manuals]
+            if not index_library:
+                raise Exception()
+            return index_library
+        except Exception as exc:
+            print(exc)
+            sleep(1)
+            print("=" * 70)
+            print(str.center("Erro ao carregar os dados do servidor.", 70))
+            print("=" * 70)
+            print()
 
+    def update_manuals(self, db):
+        """Add one manual to library."""
+        try:
+            index_library = self.sync_library(db)
+            if not index_library:
+                raise Exception()
+            # Create a iter with data to compare with download data.
+            list_currently = [(item[1], item[2]) for item in self.all_manuals]
             # Compare the two iter. In first comparison the difference
             # will be add to database. In second comparison the difference
             # will be delete of database. This will become the local database
