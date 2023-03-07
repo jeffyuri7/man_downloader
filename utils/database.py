@@ -11,28 +11,43 @@ class DB:
         """Create a database object."""
         self.conn = sqlite3.connect('database.sqlite3')
 
-    def update_library(self, data_add, data_rem):
+    def update_library(self, data_add):
         """Update the entire library."""
         # list_manuals must be a list of tuples. Each tuple should have
         # title and link of a manual.
         try:
             self.cur = self.conn.cursor()
-            self.cur.executemany("DELETE FROM manuals WHERE titulo = ?", data_rem)
-            self.cur.executemany("INSERT INTO manuals (titulo, link) VALUES (?, ?)", data_add)
-            print("Banco de dados atualizado com sucesso.")
+            for item in data_add:
+                self.cur.execute("INSERT INTO manuals (titulo, link) VALUES (?, ?) ON CONFLICT(titulo) DO UPDATE SET link=?", (item[0], item[1],item[1]))
+                print("Novo manual inserido ou link atualizado.")
         except Exception as exc:
-            print("Houve um erro ao atualizar o bando de dados.")
+            print("Houve um erro ao inserir novos manuais no bando de dados.")
             print("Código do erro", exc)
             print("O banco de dados não foi atualizado.")
         finally:
             self.cur.close()
             self.conn.commit()
 
+    def remove_manual_from_library(self, data_rem):
+        try:
+            self.cur = self.conn.cursor()
+            self.cur.executemany("DELETE FROM manuals WHERE titulo = ?", data_rem)
+            print("Manual antigo foi excluído.")
+        except Exception as exc:
+            print("Houve um excluir dados antigos do bando de dados.")
+            print("Código do erro", exc)
+            print("O banco de dados não foi atualizado.")
+        finally:
+            self.cur.close()
+            self.conn.commit()
+
+
+
     def update_manual(self, data):
         """Update the chapters and attachments of a manual."""
         try:
             self.cur = self.conn.cursor()
-            self.cur.executemany("INSERT INTO documentos (manual_id, cap_anexo, link, ordem) VALUES (?, ?, ?, ?)", data)
+            self.cur.executemany("INSERT OR IGNORE INTO documentos (manual_id, cap_anexo, link, ordem) VALUES (?, ?, ?, ?)", data)
             print("Banco de dados atualizado com sucesso.")
         except Exception as exc:
             print("Houve um erro ao atualizar o bando de dados.")
