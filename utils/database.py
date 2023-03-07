@@ -11,13 +11,14 @@ class DB:
         """Create a database object."""
         self.conn = sqlite3.connect('database.sqlite3')
 
-    def update_library(self, data):
+    def update_library(self, data_add, data_rem):
         """Update the entire library."""
         # list_manuals must be a list of tuples. Each tuple should have
         # title and link of a manual.
         try:
             self.cur = self.conn.cursor()
-            self.cur.executemany("INSERT INTO manuals (titulo, link) VALUES (?, ?)", data)
+            self.cur.executemany("DELETE FROM manuals WHERE titulo = ?", data_rem)
+            self.cur.executemany("INSERT INTO manuals (titulo, link) VALUES (?, ?)", data_add)
             print("Banco de dados atualizado com sucesso.")
         except Exception as exc:
             print("Houve um erro ao atualizar o bando de dados.")
