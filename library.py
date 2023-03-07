@@ -95,15 +95,28 @@ class Library:
             print("Banco de dados atualizado com sucesso.")
         except Exception as exc:
             print(exc)
-            sleep(3)
-            print("Erro ao carregar a lista de capítulos.")
+            sleep(1)
+            print("=" * 70)
+            print(str.center("Erro ao carregar a lista de capítulos.", 70))
+            print("=" * 70)
+            print()
 
     def update_library(self, db):
         """Update manuals and documents."""
-        self.update_manuals(db)
-        for item in self.all_manuals:
-            manual = Manual(item)
-            manual.update_manual_chapters(db)
+        try:
+            update_lib = self.update_manuals(db)
+            if not update_lib:
+                raise Exception()
+            for item in self.all_manuals:
+                manual = Manual(item)
+                manual.update_manual_chapters(db)
+        except Exception as exc:
+            print(exc)
+            sleep(1)
+            print("=" * 70)
+            print(str.center("Verifique a sua conexão com a INTRANET. Lembre-se", 70))
+            print(str.center("de estar conectado a intranet para atualizar o banco de dados.", 70))
+            print("=" * 70)
 
 
 
@@ -111,5 +124,6 @@ class Library:
 if __name__ == '__main__':
     db = DB()
     library = Library()
-    library.update_library(db)
+    # library.update_library(db)
     # library.list_manuals(db)
+    library.show_list_manuals(db)
