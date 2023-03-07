@@ -5,6 +5,7 @@ import requests
 import bs4
 from time import sleep
 from utils.database import DB
+from manual import Manual
 
 
 class Library:
@@ -54,19 +55,36 @@ class Library:
             # will be add to database. In second comparison the difference
             # will be delete of database. This will become the local database
             # and server equals.
-            data_add = list(set(index_library).difference(list_currently))
-            data_rem = [(item[0],) for item in (list(set(list_currently).difference(index_library)))]
-
             # Call function that realize the update in local database.
-            db.update_library(data_add, data_rem)
+            data_add = list(set(index_library).difference(list_currently))
+            db.update_library(data_add)
+
+            # Now, we consult again the db to examine if there is
+            # one manual that don't exists in server.
+            # If there is one remove_manual_from_library removes it.
+            self.list_manuals(db)
+            list_currently = [(item[1], item[2]) for item in self.all_manuals]
+            data_rem = [(item[0],) for item in (list(set(list_currently).difference(index_library)))]
+            if data_rem:
+                db.remove_manual_from_library(data_rem)
+            print("Banco de dados atualizado com sucesso.")
         except Exception as exc:
             print(exc)
             sleep(3)
             print("Erro ao carregar a lista de capítulos.")
 
+    def update_library(self, db):
+        """Update manuals and documents."""
+        self.update_manuals(db)
+        for item in self.all_manuals:
+            manual = Manual(item)
+            manual.update_manual_chapters(db)
+
+
+
 
 if __name__ == '__main__':
     db = DB()
     library = Library()
-    library.update_manuals(db)
+    library.update_library(db)
     # library.list_manuals(db)
