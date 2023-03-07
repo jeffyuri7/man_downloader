@@ -65,10 +65,6 @@ class Library:
             print("Erro ao carregar a lista de capítulos.")
 
 
-    def remove_manual(self):
-        """Remove one manual of library."""
-        pass
-
 if __name__ == '__main__':
     db = DB()
     library = Library()
