@@ -8,12 +8,13 @@ import os
 class Document:
     """Specify a document of a manual."""
 
-    def __init__(self, id_document, title, link, manual_id):
+    def __init__(self, id_document, title, link, manual_id, ordem):
         """Build a document object."""
         self.id = id_document  # ID of document in database
         self.title = title  # Title of document
         self.link = link  # Link to download the document
         self.manual_id = manual_id  # Foreign key of manual.
+        self.ordem = ordem  # Order of document
 
     def download_document(self, folder):
         """Download DOC from URL to local directory.
