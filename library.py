@@ -93,6 +93,7 @@ class Library:
             if data_rem:
                 db.remove_manual_from_library(data_rem)
             print("Banco de dados atualizado com sucesso.")
+            return True
         except Exception as exc:
             print(exc)
             sleep(1)
@@ -100,6 +101,7 @@ class Library:
             print(str.center("Erro ao carregar a lista de capítulos.", 70))
             print("=" * 70)
             print()
+            return False
 
     def update_library(self, db):
         """Update manuals and documents."""
