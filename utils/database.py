@@ -26,12 +26,13 @@ class DB:
                         manuals(id) ON DELETE CASCADE ON UPDATE CASCADE
                         )'''
             query_information = '''CREATE TABLE IF NOT EXISTS information (
-                        descricao TEXT,
+                        descricao TEXT UNIQUE,
                         informacao TEXT
-                        );'''
+                        )'''
             query_link = '''INSERT OR IGNORE INTO information (descricao, informacao) VALUES (?, ?)'''
             self.cur = self.conn.cursor()
             self.cur.execute(query_manuals)
+            self.cur.execute(query_index)
             self.cur.execute(query_documents)
             self.cur.execute(query_information)
             self.cur.execute(query_link, ("link-normas","https://intranet.correios.com.br/ect-normas"))
