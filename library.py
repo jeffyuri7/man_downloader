@@ -18,14 +18,14 @@ class Library:
 
     def list_manuals(self, db):
         """List all manuals of library."""
-        print("=" * 70)
-        print(str.center("Recuperando a lista de manuais...", 70))
-        print("=" * 70)
-        print()
         self.all_manuals = db.list_library()
 
     def show_list_manuals(self, db):
         """Show a list of manuals retrieved of local database."""
+        print("=" * 70)
+        print(str.center("Recuperando a lista de manuais...", 70))
+        print("=" * 70)
+        print()
         if not self.all_manuals:
             self.list_manuals(db)
         print(*((f'[ {str.rjust(str(ordem), 2)} ] - {item[1]}') for ordem, item in enumerate(self.all_manuals, 1)), sep='\n')
