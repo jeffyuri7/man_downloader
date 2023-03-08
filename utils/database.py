@@ -2,6 +2,7 @@
 """This module include the logical about database."""
 
 import sqlite3
+from time import sleep
 
 
 class DB:
@@ -52,7 +53,8 @@ class DB:
             self.cur = self.conn.cursor()
             for item in data_add:
                 self.cur.execute("INSERT INTO manuals (titulo, link) VALUES (?, ?) ON CONFLICT(titulo) DO UPDATE SET link=?", (item[0], item[1],item[1]))
-                print("Novo manual inserido ou link atualizado.")
+                print(f"{item[0]} atualizado com sucesso.")
+                sleep(0.5)
         except Exception as exc:
             print("Houve um erro ao inserir novos manuais no banco de dados.")
             print("Código do erro", exc)
@@ -74,8 +76,6 @@ class DB:
         finally:
             self.cur.close()
             self.conn.commit()
-
-
 
     def update_manual(self, data):
         """Update the chapters and attachments of a manual."""
