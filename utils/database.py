@@ -16,7 +16,7 @@ class DB:
                         titulo TEXT not null,
                         link TEXT not null
                         );
-                        CREATE UNIQUE INDEX manuals_titulo_IDX ON manuals (titulo)'''
+                        CREATE UNIQUE INDEX IF NOT EXISTS manuals_titulo_IDX ON manuals (titulo)'''
             query_documents = '''CREATE TABLE IF NOT EXISTS documentos (
                         id INTEGER not null primary key autoincrement,
                         cap_anexo TEXT not null,
@@ -29,7 +29,7 @@ class DB:
                         descricao TEXT,
                         informacao TEXT
                         );'''
-            query_link = '''INSERT INTO information (descricao, informacao) VALUES (?, ?)'''
+            query_link = '''INSERT OR IGNORE INTO information (descricao, informacao) VALUES (?, ?)'''
             self.cur = self.conn.cursor()
             self.cur.execute(query_manuals)
             self.cur.execute(query_documents)
