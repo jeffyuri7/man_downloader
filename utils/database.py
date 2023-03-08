@@ -82,7 +82,6 @@ class DB:
         try:
             self.cur = self.conn.cursor()
             self.cur.executemany("INSERT OR IGNORE INTO documentos (manual_id, cap_anexo, link, ordem) VALUES (?, ?, ?, ?)", data)
-            print("Banco de dados atualizado com sucesso.")
         except Exception as exc:
             print("Houve um erro ao atualizar o bando de dados.")
             print("Código do erro", exc)
