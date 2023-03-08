@@ -4,9 +4,13 @@ import os
 import requests
 import bs4
 from time import sleep
+from utils.helper import clear
 from utils.helper import first_word
 from utils.database import DB
 from document import Document
+from rich.progress import track
+from rich.console import Console
+from rich.table import Table
 
 
 class Manual:
@@ -40,29 +44,35 @@ class Manual:
             self.index = db.list_manual(self.id_manual)
         except Exception as exc:
             print(exc)
-            sleep(3)
+            sleep(1)
             print("Erro ao carregar a lista de capítulos.")
 
     def show_content_manual(self, db):
         """Show the content of index manual."""
         print("Recuperando a lista de capítulos e anexos...")
         sleep(1)
+        clear()
+        table = Table(title=self.titulo)
+        table.add_column("Nº", style="cyan")
+        table.add_column("Título", style="magenta")
         self.list_chapters(db)
-        print(*((f'[ {str.rjust(str(item[4]), 2)} ] - {item[1]}') for item in self.index), sep='\n')
+        for item in self.index:
+            table.add_row(str(item[4]), item[1])
+        # print(*((f'[ {str.rjust(str(item[4]), 2)} ] - {item[1]}') for item in self.index), sep='\n')
+        console = Console()
+        console.print(table)
 
     def download_manual(self, db):
         """Download the entire manual."""
         print(f"ATENÇÃO: Agora será realizado o download do {self.titulo} completo.")
         print("\nEssa operação pode demorar muito tempo, dependendo do tamanho da quantidade de arquivos e da velocidade da sua conexão.")
         folder = self.create_folder()
-        print(f"Os arquivos serão salvos na seguinte pasta: {folder}")
+        print(f"Os arquivos serão salvos na seguinte pasta: {folder}\n")
         if not self.index:
             self.list_chapters(db)
-        for item in self.index:
-            print(f"\n - Baixando {item[1]}")
-            chapter = Document(item[0], item[1], item[2], item[3])
+        for item in track(self.index, description="Baixando..."):
+            chapter = Document(item[0], item[1], item[2], item[3], item[4])
             chapter.download_document(folder)
-            print(f" - {item[1]} baixado com sucesso!\n")
         print("\nDownload concluído.")
         print(f'O {self.titulo} foi baixado com sucesso!')
 
