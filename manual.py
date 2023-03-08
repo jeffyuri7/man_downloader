@@ -35,7 +35,7 @@ class Manual:
             db.update_manual(index)
         except Exception as exc:
             print(exc)
-            sleep(3)
+            sleep(1)
             print("Erro ao carregar a lista de capítulos.")
 
     def list_chapters(self, db):
