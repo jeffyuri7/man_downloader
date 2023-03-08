@@ -21,7 +21,7 @@ class DB:
                 self.cur.execute("INSERT INTO manuals (titulo, link) VALUES (?, ?) ON CONFLICT(titulo) DO UPDATE SET link=?", (item[0], item[1],item[1]))
                 print("Novo manual inserido ou link atualizado.")
         except Exception as exc:
-            print("Houve um erro ao inserir novos manuais no bando de dados.")
+            print("Houve um erro ao inserir novos manuais no banco de dados.")
             print("Código do erro", exc)
             print("O banco de dados não foi atualizado.")
         finally:
