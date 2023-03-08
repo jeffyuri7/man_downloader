@@ -15,8 +15,8 @@ class DB:
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         titulo TEXT not null,
                         link TEXT not null
-                        );
-                        CREATE UNIQUE INDEX IF NOT EXISTS manuals_titulo_IDX ON manuals (titulo)'''
+                        )'''
+            query_index = '''CREATE UNIQUE INDEX IF NOT EXISTS manuals_titulo_IDX ON manuals (titulo)'''
             query_documents = '''CREATE TABLE IF NOT EXISTS documentos (
                         id INTEGER not null primary key autoincrement,
                         cap_anexo TEXT not null,
