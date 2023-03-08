@@ -26,7 +26,7 @@ class Document:
         response = requests.get(self.link, stream=True)
 
         # isolate DOC filename from URL
-        doc_file_name = os.path.basename(self.link)
+        doc_file_name = str(self.ordem) + ". " + os.path.basename(self.link)
         if response.status_code == 200:
             # Save in current working directory
             filepath = os.path.join(folder, doc_file_name)
