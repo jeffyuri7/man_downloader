@@ -9,7 +9,39 @@ class DB:
 
     def __init__(self):
         """Create a database object."""
-        self.conn = sqlite3.connect('database.sqlite3')
+        try:
+            self.conn = sqlite3.connect('database.sqlite3')
+            query_manuals = '''CREATE TABLE IF NOT EXISTS manuals (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        titulo TEXT not null,
+                        link TEXT not null
+                        );
+                        CREATE UNIQUE INDEX manuals_titulo_IDX ON manuals (titulo)'''
+            query_documents = '''CREATE TABLE IF NOT EXISTS documentos (
+                        id INTEGER not null primary key autoincrement,
+                        cap_anexo TEXT not null,
+                        link TEXT not null,
+                        manual_id INTEGER not null, ordem INTEGER,
+                        CONSTRAINT documentos_FK FOREIGN KEY (manual_id) REFERENCES
+                        manuals(id) ON DELETE CASCADE ON UPDATE CASCADE
+                        )'''
+            query_information = '''CREATE TABLE IF NOT EXISTS information (
+                        descricao TEXT,
+                        informacao TEXT
+                        );'''
+            query_link = '''INSERT INTO information (descricao, informacao) VALUES (?, ?)'''
+            self.cur = self.conn.cursor()
+            self.cur.execute(query_manuals)
+            self.cur.execute(query_documents)
+            self.cur.execute(query_information)
+            self.cur.execute(query_link, ("link-normas","https://intranet.correios.com.br/ect-normas"))
+        except Exception as exc:
+            print("Houve um erro ao criar um novo banco de dados.")
+            print("Código do erro", exc)
+            print("O banco de dados não foi atualizado.")
+        finally:
+            self.cur.close()
+            self.conn.commit()
 
     def update_library(self, data_add):
         """Update the entire library."""
