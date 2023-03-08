@@ -29,6 +29,7 @@ class DB:
             self.conn.commit()
 
     def remove_manual_from_library(self, data_rem):
+        """Remove one manual of local database."""
         try:
             self.cur = self.conn.cursor()
             self.cur.executemany("DELETE FROM manuals WHERE titulo = ?", data_rem)
